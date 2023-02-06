@@ -1,3 +1,11 @@
+#Title: cloudfunctions.py
+#Description: cloudfunctions.py file contains the function inorder to trigger the dag with a storage trigger and it triggers when a file is created in the cloud 
+#bucket named sustainit
+#Triggered by  creation or updation in cloud storage bucket 
+#Date           Change Name        User    
+#Feb 06, 2023   Added comments     Aaron
+
+"""Importing the required libraries and modules"""
 from google.auth.transport.requests import Request
 from google.oauth2 import id_token
 import requests
@@ -79,7 +87,7 @@ def trigger_dag(data, context=None):
     # {tenant-project-id}.appspot.com
     webserver_id = 'gc1383166fcde49aap-tp'
     # The name of the DAG you wish to trigger
-    dag_name = 'composer_sample_trigger_response_dag'
+    dag_name = 'Storage_trigger_response_dag'
 
     if USE_EXPERIMENTAL_API:
         endpoint = f'api/experimental/dags/{dag_name}/dag_runs'
