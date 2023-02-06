@@ -32,6 +32,20 @@ resource "google_compute_subnetwork" "test" {
   region        = "us-central1"
   network       = google_compute_network.test.id
 }
+resource "google_storage_bucket" "logbucketcreate" {
+  name          = "composer_logs"
+  location      = "US"
+  force_destroy = true
+}
+
+resource "google_logging_project_sink" "instance-sink" {
+  name        = "composer_logs-sink"
+  description = "errors log from composer"
+  destination = "storage.googleapis.com/${google_storage_bucket.logbucketcreate.name}"
+  filter      = "resource.type = cloud_composer_environment AND resource.labels.instance_id = \"${var.composer_env_name}\" AND resource.labels.location=\"asia-east2\" AND severity=ERROR"
+
+  unique_writer_identity = true
+}
 
 
 
